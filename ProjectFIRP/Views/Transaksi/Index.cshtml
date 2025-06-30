@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ProjectFIRP.Models.Transaksi>
+@{
+    ViewData["Title"] = "Daftar Transaksi";
+}
+
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>Daftar Transaksi</h5>
+            <a href="/Transaksi/Create" class="btn btn-light btn-sm"><i class="fas fa-plus-circle me-1"></i> Tambah Transaksi</a>
+        </div>
+        <div class="card-body">
+            @if (TempData["success"] != null)
+            {
+                <div class="alert alert-success">@TempData["success"]</div>
+            }
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Jumlah</th>
+                        <th>Jenis</th>
+                        <th>Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in Model)
+                    {
+                        <tr>
+                            <td>@t.NamaBarang</td>
+                            <td>@t.Jumlah</td>
+                            <td>@t.Jenis</td>
+                            <td>@t.Tanggal.ToShortDateString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

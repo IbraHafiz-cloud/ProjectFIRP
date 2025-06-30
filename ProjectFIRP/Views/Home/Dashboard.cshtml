@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">150</h5>
+                <p class="card-text">New Orders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">53%</h5>
+                <p class="card-text">Bounce Rate</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">44</h5>
+                <p class="card-text">User Registrations</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">65</h5>
+                <p class="card-text">Unique Visitors</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        Sales Graph
+    </div>
+    <div class="card-body">
+        <canvas id="salesChart" height="100"></canvas>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2011', '2012', '2013'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [5000, 10000, 16000],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,
+                    tension: 0.4
+                }]
+            }
+        });
+    </script>
+}
