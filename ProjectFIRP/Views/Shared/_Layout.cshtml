@@ -1,48 +1,133 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+    <style>
+    /* Warna dasar navbar dan branding */
+    .custom-navbar {
+        background-color: #E1EEFF;
+        border-bottom: 1px solid #cce0f5;
+    }
+
+    /* Logo dan teks brand */
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2B4D70 !important;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-login {
+        background-color: #75B4FF;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+        .btn-login:hover {
+            background-color: #4C9DFF;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+    .footer-modern {
+        background-color: #f2f2f2; /* dari #1e1e1e */
+        color: #333;
+    }
+
+        .footer-modern .text-muted {
+            color: #666 !important;
+        }
+
+    .footer-link {
+        color: #555;
+    }
+
+        .footer-link:hover,
+        .footer-icon:hover {
+            color: #000;
+        }
+
+    .footer-icon {
+        color: #555;
+    }
+
+    </style>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProjectFIRP</title>
+    <title>@ViewData["Title"] - Aesthenia</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ProjectFIRP.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/gtau.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjectFIRP</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 sticky-top custom-navbar">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand fw-bold text-primary fs-4" href="#">
+                    Aesthenia
+                </a>
+                <div class="ms-auto">
+                    <a href="/Account/Login" class="btn btn-login rounded-pill px-4">Login</a>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container-fluid px-0">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
+    <footer class="footer-modern text-white pt-5 pb-4">
         <div class="container">
-            &copy; 2025 - ProjectFIRP - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row gy-4">
+
+                <!-- Tentang -->
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Klinik Aesthenia</h5>
+                    <p class="text-muted">
+                        Klinik kecantikan terpercaya dengan pelayanan profesional dan teknologi modern untuk perawatan kulit, wajah, dan tubuh.
+                    </p>
+                </div>
+
+                <!-- Navigasi -->
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Navigasi</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li><a href="/" class="footer-link">Beranda</a></li>
+                        <li><a href="#layanan" class="footer-link">Layanan</a></li>
+                        <li><a href="/About" class="footer-link">Tentang Kami</a></li>
+                        <li><a href="/Contact" class="footer-link">Kontak</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kontak & Sosial -->
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Kontak</h5>
+                    <p class="text-muted mb-1"><i class="bi bi-geo-alt me-2"></i>Jl. Mawar No. 123, Padang</p>
+                    <p class="text-muted mb-1"><i class="bi bi-telephone me-2"></i>0821-xxxx-xxxx</p>
+                    <p class="text-muted mb-3"><i class="bi bi-envelope me-2"></i>klinikaesthenia@email.com</p>
+
+                    <div>
+                        <a href="#" class="footer-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="footer-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="footer-icon"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 border-light" />
+
+            <div class="text-center text-muted small">
+                &copy; @DateTime.Now.Year Klinik Aesthenia. All rights reserved.
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,8 +1,156 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Beranda - Klinik Cantik Sejati";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Tambahkan style langsung di halaman -->
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .hero-section {
+        min-height: 600px;
+        background: url('/images/landing-hero.jpg') no-repeat center center / cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        position: relative;
+    }
+
+    .hero-overlay {
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        padding: 80px 20px;
+    }
+
+    .btn-primary {
+        background-color: #75B4FF;
+        border-color: #75B4FF;
+    }
+
+        .btn-primary:hover {
+            background-color: #4C9DFF;
+            border-color: #4C9DFF;
+        }
+
+    .section-light-blue {
+        background-color: #E1EEFF;
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .section-title {
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .text-muted {
+        color: #555 !important;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section position-relative text-white text-center d-flex align-items-center justify-content-center" style="height: 90vh; background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0,0,0,0.6)), url('/images/landing-hero.jpg') no-repeat center center / cover;">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-3">Klinik Aesthenia</h1>
+        <p class="lead mb-4">Raih Kecantikan Alami Anda Bersama Kami</p>
+        <a href="#layanan" class="btn btn-primary btn-lg px-4 py-2">Lihat Layanan</a>
+    </div>
+</section>
+
+<!-- Tentang Kami -->
+<section class="py-5 section-light-blue">
+    <div class="container-fluid px-0 text-center">
+        <h2 class="section-title">Tentang Kami</h2>
+        <p class="fs-5 text-muted mx-auto" style="max-width: 800px;">
+            Klinik Aesthenia adalah klinik kecantikan yang berkomitmen memberikan layanan terbaik
+            dalam perawatan kulit, wajah, dan tubuh. Kami hadir dengan tenaga profesional dan teknologi modern
+            untuk membantu Anda tampil lebih percaya diri.
+        </p>
+    </div>
+</section>
+
+<!-- Layanan -->
+<section id="layanan" class="py-5">
+    <div class="container-fluid px-3 text-center">
+        <h2 class="section-title">Layanan Kami</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3">
+                <div class="card h-100 shadow border-0">
+                    <img src="/images/facial.jpg" class="card-img-top p-3" alt="Facial Treatment">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Facial Treatment</h5>
+                        <p class="card-text text-muted">Perawatan wajah untuk kulit sehat dan bercahaya.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 shadow border-0">
+                    <img src="/images/laser.jpg" class="card-img-top p-3" alt="Laser Therapy">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Laser Therapy</h5>
+                        <p class="card-text text-muted">Teknologi laser modern untuk peremajaan kulit.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 shadow border-0">
+                    <img src="/images/body.jpg" class="card-img-top p-3" alt="Body Slimming">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Body Slimming</h5>
+                        <p class="card-text text-muted">Bentuk tubuh ideal tanpa operasi dengan metode alami.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Testimoni -->
+<section class="py-5 section-light-blue">
+    <div class="container-fluid px-3 text-center">
+        <h2 class="section-title">Testimoni Klien</h2>
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4">
+                <div class="card shadow border-0 h-100">
+                    <div class="card-body">
+                        <p class="card-text fst-italic">"Pelayanannya luar biasa, wajah saya jauh lebih cerah dan sehat!"</p>
+                        <h6 class="mt-3 text-primary">Anita, 29 tahun</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow border-0 h-100">
+                    <div class="card-body">
+                        <p class="card-text fst-italic">"Sudah langganan 3 tahun, hasilnya selalu memuaskan!"</p>
+                        <h6 class="mt-3 text-primary">Rina, 35 tahun</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Call to Action -->
+<section class="py-5 bg-light text-center">
+    <h2 class="section-title">Hubungi Kami</h2>
+    <p class="mb-4 text-muted">Ingin tampil lebih cantik dan percaya diri? Jadwalkan sesi perawatan Anda hari ini!</p>
+    <a href="/Booking" class="btn btn-primary px-4 py-2">Reservasi Sekarang</a>
+</section>
