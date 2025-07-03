@@ -1,66 +1,114 @@
 ﻿@{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Dashboard Monitoring Obat";
+    var trendLabels = (List<string>)ViewBag.TrendLabels;
+    var trendData = (List<int>)ViewBag.TrendData;
+    var stokRendah = (List<ProjectFIRP.Models.StokObatViewModel>)ViewBag.StokRendah;
 }
 
-<h2>Dashboard</h2>
-<div class="row mb-4">
+<h2><i class="fas fa-chart-line"></i> Dashboard Monitoring Obat</h2>
+
+<div class="row mb-4 text-white">
     <div class="col-md-3">
-        <div class="card text-white bg-info">
-            <div class="card-body">
-                <h5 class="card-title">150</h5>
-                <p class="card-text">New Orders</p>
+        <div class="card bg-info">
+            <div class="card-body text-center">
+                <h5>@ViewBag.TotalMasuk</h5>
+                <p>Barang Masuk</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-white bg-success">
-            <div class="card-body">
-                <h5 class="card-title">53%</h5>
-                <p class="card-text">Bounce Rate</p>
+        <div class="card bg-success">
+            <div class="card-body text-center">
+                <h5>@ViewBag.TotalKeluar</h5>
+                <p>Barang Keluar</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-white bg-warning">
-            <div class="card-body">
-                <h5 class="card-title">44</h5>
-                <p class="card-text">User Registrations</p>
+        <div class="card bg-warning">
+            <div class="card-body text-center">
+                <h5>@ViewBag.TotalSisa</h5>
+                <p>Stok Tersisa</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-white bg-danger">
-            <div class="card-body">
-                <h5 class="card-title">65</h5>
-                <p class="card-text">Unique Visitors</p>
+        <div class="card bg-danger">
+            <div class="card-body text-center">
+                <h5>@ViewBag.TotalKadaluarsa</h5>
+                <p>Kadaluarsa</p>
             </div>
         </div>
     </div>
 </div>
 
 <div class="card mb-4">
-    <div class="card-header">
-        Sales Graph
+    <div class="card-header bg-secondary text-white">
+        <i class="fas fa-chart-bar me-2"></i> Tren Barang Masuk Harian
     </div>
     <div class="card-body">
-        <canvas id="salesChart" height="100"></canvas>
+        <canvas id="trendChart" height="100"></canvas>
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        <i class="fas fa-exclamation-circle me-2"></i> 5 Stok Obat Terendah
+    </div>
+    <div class="card-body">
+        <table class="table table-sm table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Nama Obat</th>
+                    <th>Stok Sisa</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (stokRendah != null && stokRendah.Any())
+
+                {
+                    foreach (var s in stokRendah)
+                    {
+                        <tr>
+                            <td>@s.NamaObat</td>
+                            <td>@s.StokSisa</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="2" class="text-center text-muted">Tidak ada data</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('salesChart').getContext('2d');
-        const chart = new Chart(ctx, {
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        const trendChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['2011', '2012', '2013'],
+                labels: @Html.Raw(Json.Serialize(trendLabels)),
                 datasets: [{
-                    label: 'Sales',
-                    data: [5000, 10000, 16000],
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    fill: false,
-                    tension: 0.4
+                    label: 'Barang Masuk',
+                    data: @Html.Raw(Json.Serialize(trendData)),
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true,
+                    tension: 0.3
                 }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0
+                    }
+                }
             }
         });
     </script>

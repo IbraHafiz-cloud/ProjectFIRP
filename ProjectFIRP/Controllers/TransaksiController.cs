@@ -1,35 +1,65 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectFIRP.Data;
 using ProjectFIRP.Models;
-using System.Collections.Generic;
+using System.Linq;
 
-namespace ProjectFIRP.Controllers
+public class TransaksiController : Controller
 {
-    public class TransaksiController : Controller
+    private readonly ApplicationDbContext _context;
+
+    public TransaksiController(ApplicationDbContext context)
     {
-        // Simulasi database sementara
-        private static List<Transaksi> _transaksiList = new();
+        _context = context;
+    }
 
-        public IActionResult Index()
-        {
-            return View(_transaksiList);
-        }
+    public IActionResult Index()
+    {
+        var transaksiList = _context.Transaksis.ToList();
+        return View(transaksiList); // akan cari file Views/Transaksi/Index.cshtml
+    }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+    public IActionResult Create()
+    {
+        return View(); // akan cari file Views/Transaksi/Create.cshtml
+    }
 
-        [HttpPost]
-        public IActionResult Create(Transaksi model)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Transaksi transaksi)
+    {
+        if (ModelState.IsValid)
         {
-            if (ModelState.IsValid)
+            _context.Transaksis.Add(transaksi);
+
+            if (transaksi.Jenis == "Masuk")
             {
-                _transaksiList.Add(model);
-                TempData["success"] = "Transaksi berhasil ditambahkan.";
-                return RedirectToAction("Index");
+                var barangMasuk = new BarangMasuk
+                {
+                    NamaBarang = transaksi.NamaBarang,
+                    Jumlah = transaksi.Jumlah,
+                    TanggalMasuk = transaksi.Tanggal,
+                    TanggalKadaluarsa = transaksi.TanggalKadaluarsa,
+                    Keterangan = "Dari Transaksi"
+                };
+                _context.BarangMasuks.Add(barangMasuk);
+            }
+            else if (transaksi.Jenis == "Keluar")
+            {
+                var barangKeluar = new BarangKeluar
+                {
+                    NamaBarang = transaksi.NamaBarang,
+                    Jumlah = transaksi.Jumlah,
+                    TanggalKeluar = transaksi.Tanggal,
+                    Keterangan = "Dari Transaksi"
+                };
+                _context.BarangKeluars.Add(barangKeluar);
             }
 
-            return View(model);
+            _context.SaveChanges();
+            TempData["success"] = "Transaksi berhasil disimpan.";
+            return RedirectToAction(nameof(Index));
         }
+
+        return View(transaksi);
     }
 }

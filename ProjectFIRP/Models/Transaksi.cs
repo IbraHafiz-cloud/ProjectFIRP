@@ -12,15 +12,19 @@ namespace ProjectFIRP.Models
         public string NamaBarang { get; set; }
 
         [Required]
-        [Display(Name = "Jumlah")]
+        [Range(1, int.MaxValue, ErrorMessage = "Jumlah harus lebih dari 0")]
         public int Jumlah { get; set; }
 
         [Required]
         [Display(Name = "Jenis Transaksi")]
-        public string Jenis { get; set; } // Masuk / Keluar
+        public string Jenis { get; set; } // "Masuk" atau "Keluar"
 
         [Required]
-        [Display(Name = "Tanggal Transaksi")]
+        [DataType(DataType.Date)]
         public DateTime Tanggal { get; set; }
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Tanggal Kadaluarsa (Opsional)")]
+        public DateTime? TanggalKadaluarsa { get; set; } // Hanya dipakai jika "Masuk"
     }
 }

@@ -4,7 +4,7 @@
 }
 
 <div class="container mt-4">
-    <div class="card shadow rounded-3 border-0">
+    <div class="card shadow border-0">
         <div class="card-header bg-success text-white">
             <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah Transaksi</h5>
         </div>
@@ -18,23 +18,29 @@
 
                 <div class="mb-3">
                     <label asp-for="Jumlah" class="form-label"></label>
-                    <input asp-for="Jumlah" type="number" class="form-control" min="1" />
+                    <input asp-for="Jumlah" class="form-control" type="number" min="1" />
                     <span asp-validation-for="Jumlah" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Jenis" class="form-label"></label>
-                    <select asp-for="Jenis" class="form-control">
+                    <select asp-for="Jenis" class="form-control" id="jenisDropdown">
                         <option value="">-- Pilih Jenis --</option>
-                        <option>Masuk</option>
-                        <option>Keluar</option>
+                        <option value="Masuk">Masuk</option>
+                        <option value="Keluar">Keluar</option>
                     </select>
                     <span asp-validation-for="Jenis" class="text-danger"></span>
                 </div>
 
+                <div class="mb-3" id="kadaluarsaField" style="display:none;">
+                    <label asp-for="TanggalKadaluarsa" class="form-label"></label>
+                    <input asp-for="TanggalKadaluarsa" class="form-control" type="date" />
+                    <span asp-validation-for="TanggalKadaluarsa" class="text-danger"></span>
+                </div>
+
                 <div class="mb-3">
                     <label asp-for="Tanggal" class="form-label"></label>
-                    <input asp-for="Tanggal" type="date" class="form-control" />
+                    <input asp-for="Tanggal" class="form-control" type="date" />
                     <span asp-validation-for="Tanggal" class="text-danger"></span>
                 </div>
 
@@ -47,4 +53,24 @@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        const jenisDropdown = document.getElementById("jenisDropdown");
+        const kadaluarsaField = document.getElementById("kadaluarsaField");
+
+        jenisDropdown.addEventListener("change", function () {
+            if (this.value === "Masuk") {
+                kadaluarsaField.style.display = "block";
+            } else {
+                kadaluarsaField.style.display = "none";
+            }
+        });
+
+        // Jika user kembali ke halaman & "Masuk" sudah terisi
+        window.addEventListener("DOMContentLoaded", function () {
+            if (jenisDropdown.value === "Masuk") {
+                kadaluarsaField.style.display = "block";
+            }
+        });
+    </script>
 }
