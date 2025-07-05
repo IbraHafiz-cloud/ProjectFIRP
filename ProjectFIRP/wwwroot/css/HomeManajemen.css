@@ -1,0 +1,168 @@
+﻿body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+}
+
+.sidebar {
+    width: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(to right, #0369a1, #0369a1);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+    .sidebar:hover {
+        width: 240px;
+    }
+
+    .sidebar h4 {
+        font-size: 1.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-align: center;
+        transition: font-size 0.3s;
+    }
+
+    .sidebar:hover h4 {
+        font-size: 1.6rem;
+    }
+
+    /* Perbaikan untuk alignment nav-link */
+    .sidebar .nav-link {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #ccc;
+        transition: all 0.2s ease;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-bottom: 5px;
+    }
+
+        .sidebar .nav-link i {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: #667eea;
+            color: #fff;
+        }
+
+.main-content {
+    margin-left: 80px;
+    transition: margin-left 0.3s ease;
+    padding: 20px;
+}
+
+.sidebar:hover ~ .main-content {
+    margin-left: 240px;
+}
+
+/* Perbaikan untuk menu-text */
+.menu-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    line-height: 1;
+}
+
+.sidebar:hover .menu-text {
+    opacity: 1;
+    width: auto;
+}
+
+/* Perbaikan untuk sidebar-brand */
+.sidebar-brand {
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    height: 32px;
+    transition: margin 0.3s ease;
+    flex-shrink: 0;
+}
+
+.brand-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #fff;
+    margin-left: 10px;
+    opacity: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
+    line-height: 1;
+}
+
+.sidebar:hover .sidebar-brand {
+    justify-content: flex-start;
+    padding-left: 15px;
+}
+
+.sidebar:hover .brand-text {
+    opacity: 1;
+}
+
+/* Perbaikan untuk logout-section */
+.logout-section {
+    border-top: 1px solid #444;
+    padding-top: 15px;
+    margin-top: auto;
+}
+
+    .logout-section button.nav-link {
+        text-align: left;
+        text-decoration: none;
+        font-size: 15px;
+        color: #ccc;
+        border: none;
+        background: none;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .logout-section button.nav-link i {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .logout-section button.nav-link:hover {
+            background-color: #667eea;
+            color: #fff;
+        }
+
+/* Perbaikan khusus untuk nav item */
+.nav-item {
+    margin-bottom: 0;
+}
+
+    .nav-item .nav-link {
+        margin-bottom: 8px;
+    }

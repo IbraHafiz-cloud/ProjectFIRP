@@ -9,5 +9,9 @@ namespace ProjectFIRP.Data
             : base(options)
         {
         }
+
+        // Tambahkan DbSet jika kamu punya model tambahan (contoh):
+        // public DbSet<Product> Products { get; set; }
+        // public DbSet<InventoryItem> InventoryItems { get; set; }
     }
 }

@@ -2,8 +2,9 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    Layout = null;
 }
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="~/css/register.css" />
 
 <div class="register-wrapper">
@@ -20,26 +21,26 @@
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"/>
-                    <label asp-for="Input.Email">Email</label>
+                <div class="form-group-custom">
+                    <input asp-for="Input.Email" class="input-custom" autocomplete="username" required />
+                    <label>Email</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true"/>
-                    <label asp-for="Input.Password">Password</label>
+                <div class="form-group-custom">
+                    <input asp-for="Input.Password" class="input-custom" autocomplete="new-password" required />
+                    <label>Password</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true"/>
-                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <div class="form-group-custom">
+                    <input asp-for="Input.ConfirmPassword" class="input-custom" autocomplete="new-password" required />
+                    <label>Confirm Password</label>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
 
+
                 <div class="actions">
-                    <a asp-page="./Login" class="btn login-btn">Login</a>
                     <button type="submit" class="btn register-btn">Register</button>
                 </div>
             </form>

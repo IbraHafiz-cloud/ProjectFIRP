@@ -1,0 +1,319 @@
+﻿@model ProjectFIRP.Models.UserManagementViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Data User";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+<link href="~/css/HomeManajemen.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<body class="m-0 p-0">
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column justify-content-between text-white p-3 h-100">
+        <div>
+            <!-- Brand / Logo -->
+            <div class="sidebar-brand d-flex align-items-center mb-4">
+                <img src="~/images/Logo.png" alt="Logo" class="logo-icon" />
+                <span class="brand-text">Aesthenia</span>
+            </div>
+            <!-- Navigation Menu -->
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" asp-controller="Manajemen" asp-action="Index">
+                        <i class="bi bi-speedometer2"></i> <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white active" asp-controller="UserManagement" asp-action="Index">
+                        <i class="bi bi-people-fill"></i> <span class="menu-text">Data User</span>
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" asp-controller="User" asp-action="Index">
+                        <i class="bi bi-clipboard-data-fill"></i> <span class="menu-text">Laporan Inventaris</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Logout -->
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <ul class="nav flex-column">
+                <li class="nav-item logout-section">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                          asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="nav-link btn btn-link text-white p-0 text-start w-100">
+                            <i class="bi bi-box-arrow-right"></i> <span class="menu-text">Logout</span>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        }
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Header -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="text-dark fw-bold mb-0">
+                        <i class="bi bi-people-fill me-2"></i>Data User
+                    </h2>
+                    <p class="text-muted">Kelola akun pengguna sistem</p>
+                </div>
+            </div>
+
+            <!-- Alert Messages -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>@TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- Add User Button -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        <i class="bi bi-plus-circle me-2"></i>Tambah User
+                    </button>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-white">
+                            <h5 class="card-title mb-0">Daftar User</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Status</th>
+                                            <th>Email Confirmed</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var user in Model.Users)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="avatar-sm bg-primary rounded-circle d-flex align-items-center justify-content-center me-2">
+                                                            <span class="text-white fw-bold">@user.UserName.First()</span>
+                                                        </div>
+                                                        @user.UserName
+                                                    </div>
+                                                </td>
+                                                <td>@user.Email</td>
+                                                <td>
+                                                    @if (user.Roles.Any())
+                                                    {
+                                                        foreach (var role in user.Roles)
+                                                        {
+                                                            <span class="badge bg-info me-1">@role</span>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-secondary">No Role</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (user.IsActive)
+                                                    {
+                                                        <span class="badge bg-success">Active</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-danger">Inactive</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (user.EmailConfirmed)
+                                                    {
+                                                        <i class="bi bi-check-circle text-success"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="bi bi-x-circle text-danger"></i>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a href="@Url.Action("Edit", "UserManagement", new { id = user.Id })"
+                                                           class="btn btn-sm btn-outline-primary">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
+                                                        <a href="@Url.Action("ChangePassword", "UserManagement", new { id = user.Id })"
+                                                           class="btn btn-sm btn-outline-warning">
+                                                            <i class="bi bi-key"></i>
+                                                        </a>
+                                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                                                onclick="confirmDelete('@user.Id', '@user.UserName')">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                        @if (!Model.Users.Any())
+                                        {
+                                            <tr>
+                                                <td colspan="6" class="text-center text-muted py-4">
+                                                    <i class="bi bi-inbox display-4 d-block mb-2"></i>
+                                                    Tidak ada data user
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah User Baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form asp-action="Create" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label asp-for="CreateUser.UserName" class="form-label"></label>
+                            <input asp-for="CreateUser.UserName" class="form-control" />
+                            <span asp-validation-for="CreateUser.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CreateUser.Email" class="form-label"></label>
+                            <input asp-for="CreateUser.Email" class="form-control" />
+                            <span asp-validation-for="CreateUser.Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CreateUser.Password" class="form-label"></label>
+                            <input asp-for="CreateUser.Password" class="form-control" />
+                            <span asp-validation-for="CreateUser.Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CreateUser.ConfirmPassword" class="form-label"></label>
+                            <input asp-for="CreateUser.ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="CreateUser.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CreateUser.Role" class="form-label"></label>
+                            <select asp-for="CreateUser.Role" class="form-select">
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Manager">Manager</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus user <strong id="deleteUserName"></strong>?</p>
+                    <p class="text-danger"><small>Tindakan ini tidak dapat dibatalkan.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <form id="deleteForm" method="post" style="display: inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+
+        <script>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <text>
+                        var myModal = new bootstrap.Modal(document.getElementById('addUserModal'));
+                        myModal.show();
+                </text>
+            }
+        </script>
+    }
+
+    <script>
+        function confirmDelete(userId, userName) {
+            document.getElementById('deleteUserName').textContent = userName;
+            document.getElementById('deleteForm').action = '/UserManagement/Delete/' + userId;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        }
+
+        // Auto-dismiss alerts
+        setTimeout(function() {
+            var alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                var bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+
+    <style>
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+        }
+
+        .main-content {
+            margin-left: 80px;
+            transition: margin-left 0.3s ease;
+            padding: 20px;
+        }
+
+        .sidebar:hover ~ .main-content {
+            margin-left: 240px;
+        }
+    </style>
+</body>
